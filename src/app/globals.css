@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+    --primary: #2361F1;
+    --primaryDarker: #12378b;
+    --primaryLighter: #3f75f2;
+    --secondary: #F3B52C;
+    --shadowPrimary: 0 1px 2px 1px #e1e1e1;
+
+    --sideSpace: 14%;
+    --textColor: #131313;
+}
+
+@media screen and (max-width: 1024px) {
+    :root{
+        --sideSpace: 6%;
+    }
+}
+
+body {
+    color: var(--textColor);
+}
