@@ -8,11 +8,11 @@ export async function POST(req: NextRequest) {
     await connectMongo()
     const minimumPasswordLength = 6
     if (password.length < minimumPasswordLength) {
-        return NextResponse.json({ success: false, message: "Password must contain at least 6 characters." })
+        return NextResponse.json({ success: false, message: "Šifra mora imati najmanje 6 karaktera." })
     }
     const user = await userModel.findOne({ email })
     if (user) {
-        return NextResponse.json({ success: false, message: "User with this email already exists." })
+        return NextResponse.json({ success: false, message: "Korisnik sa ovom email adresom već postoji." })
     }
     const hashedPassword = hash(password)
     await userModel.create({
@@ -21,5 +21,5 @@ export async function POST(req: NextRequest) {
         email,
         password: hashedPassword,
     })
-    return NextResponse.json({ success: true, message: "User successfully registered." })
+    return NextResponse.json({ success: true, message: "Uspešna registracija." })
 }
