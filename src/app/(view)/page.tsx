@@ -4,7 +4,8 @@ import Image from "next/image"
 import ListingRows from "@/components/ListingRows"
 import SearchBar from "@/components/SearchBar"
 import listingModel from "@/models/listing"
-
+import { connectMongo } from "@/tools/db"
+export const dynamic = "force-dynamic"
 export default async function Home() {
     // const listings: Listing[] = [
     //     {
@@ -92,7 +93,7 @@ export default async function Home() {
     //         },
     //     },
     // ]
-
+    await connectMongo()
     const listings = await listingModel.find()
 
     return (

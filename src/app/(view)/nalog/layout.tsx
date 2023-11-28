@@ -1,5 +1,5 @@
 import React from "react"
-import { authOptions } from "@/app/api/auth/[...nextauth]/route"
+import { authOptions } from "@/tools/authOptions"
 import AccountWindow from "@/components/AccountWindow"
 import userModel from "@/models/user"
 import { connectMongo } from "@/tools/db"

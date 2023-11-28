@@ -1,4 +1,4 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route"
+import { authOptions } from "@/tools/authOptions"
 import listingModel from "@/models/listing"
 import userModel from "@/models/user"
 import { connectMongo } from "@/tools/db"
