@@ -1,11 +1,9 @@
-import { v4 } from "uuid"
-import { Listing } from "@/types"
-import Image from "next/image"
 import ListingRows from "@/components/ListingRows"
-import SearchBar from "@/components/SearchBar"
 import listingModel from "@/models/listing"
 import { connectMongo } from "@/tools/db"
+import serializeData from "@/tools/serializeData"
 export const dynamic = "force-dynamic"
+
 export default async function Home() {
     // const listings: Listing[] = [
     //     {
@@ -95,13 +93,9 @@ export default async function Home() {
     // ]
     await connectMongo()
     const listings = await listingModel.find()
-
     return (
         <div className="px-sideSpace py-4">
-            <SearchBar />
-            <div>
-                <ListingRows listings={listings} />
-            </div>
+            <ListingRows listings={serializeData(listings)} />
         </div>
     )
 }

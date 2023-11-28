@@ -1,6 +1,7 @@
 import { Listing } from "@/types"
 import ListingSwiper from "./ListingSwiper"
 import { list } from "firebase/storage"
+import Link from "next/link"
 
 export default function page({ listing }: { listing: Listing }) {
     return (
@@ -23,7 +24,9 @@ export default function page({ listing }: { listing: Listing }) {
                             {listing.pricePerHour.amount} {listing.pricePerHour.currency}
                         </div>
                     </div>
-                    <button className="w-fit bg-primary text-white font-semibold rounded-lg px-4 py-2 mt-6 transition-colors hover:bg-primaryDarker">Rezervisi termin</button>
+                    <Link href={`/rezervisi/${listing._id}`} className="w-fit bg-primary block text-white font-semibold rounded-lg px-4 py-2 mt-6 transition-colors hover:bg-primaryDarker">
+                        Rezervisi termin
+                    </Link>
                 </div>
             </div>
         </div>

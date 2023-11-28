@@ -28,5 +28,5 @@ export async function POST(req: NextRequest) {
         reservations: [],
         category,
     })
-    return NextResponse.json({ success: true, message: "Uspešno kreiran objekat." })
+    return NextResponse.json({ success: true, message: "Uspešno kreiran objekat.", listingId: newListing.id })
 }

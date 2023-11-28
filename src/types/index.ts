@@ -1,4 +1,5 @@
 export interface Listing {
+    _id?: string
     id?: string
     ownerId?: string
     title: string
@@ -11,9 +12,16 @@ export interface Listing {
 }
 export interface Reservation {
     id?: string
+    ownerId?: string
+    listingId?: string
+    clientInfo: {
+        firstName: string
+        lastName: string
+        phoneNumber?: string
+        email?: string
+    }
     startDate: Date
     endDate: Date
-    paid: boolean
 }
 export interface Price {
     amount: number
@@ -30,3 +38,4 @@ export interface User {
     email: string
     createdAt: string
 }
+export type Category = "all" | "football" | "basketball" | "tennis" | "pool"

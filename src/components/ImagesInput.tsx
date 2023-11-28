@@ -19,7 +19,6 @@ export default function ImagesInput({ images, setImages, imagesError, setImagesE
         const images = await uploadImages(files)
         setImages((current) => {
             const newImages = [...current, ...images].filter((image) => image != "$loading")
-            console.log(newImages)
             return newImages
         })
     }

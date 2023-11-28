@@ -9,6 +9,7 @@ const config: Config = {
                 primaryDarker: "var(--primaryDarker)",
                 primaryLighter: "var(--primaryLighter)",
                 secondary: "var(--secondary)",
+                secondaryDarker: "var(--secondaryDarker)",
             },
             boxShadow: {
                 primary: "var(--shadowPrimary)",

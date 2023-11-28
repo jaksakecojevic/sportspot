@@ -1,3 +1,3 @@
-export default function serializeData(data: object) {
-    return JSON.parse(JSON.stringify(data))
+export default function serializeData(data: any) {
+    return JSON.parse(JSON.stringify(data)) as any
 }

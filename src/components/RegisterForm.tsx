@@ -6,7 +6,7 @@ import LoadingDots from "./LoadingDots"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { signIn } from "next-auth/react"
-import TextInput from "./TextInput"
+import TextInput from "./inputs/TextInput"
 
 export default function RegisterForm() {
     const [firstName, setFirstName] = useState("")
