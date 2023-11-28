@@ -17,7 +17,7 @@ export interface Reservation {
 }
 export interface Price {
     amount: number
-    currencyCode: string
+    currency: string
 }
 export interface Address {
     street: string

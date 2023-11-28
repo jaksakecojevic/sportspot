@@ -8,18 +8,15 @@ import Link from "next/link"
 import { signIn } from "next-auth/react"
 import TextInput from "./TextInput"
 
-export default function RegisterForm() {
-    const [firstName, setFirstName] = useState("")
-    const [lastName, setLastName] = useState("")
+export default function LoginForm() {
+    const { push } = useRouter()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
-    const [firstNameError, setFirstNameError] = useState("")
-    const [lastNameError, setLastNameError] = useState("")
     const [emailError, setEmailError] = useState("")
     const [passwordError, setPasswordError] = useState("")
 
-    const [registrationError, setRegistrationError] = useState("")
+    const [loginError, setLoginError] = useState("")
 
     const [loading, setLoading] = useState(false)
 
@@ -33,14 +30,7 @@ export default function RegisterForm() {
     function isInvalid() {
         var emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
         let hasErrors = false
-        if (!firstName) {
-            throwError(setFirstNameError, "Ime je obavezno polje.")
-            hasErrors = true
-        }
-        if (!lastName) {
-            throwError(setLastNameError, "Prezime je obavezno polje.")
-            hasErrors = true
-        }
+
         if (!email.match(emailRegex)) {
             throwError(setEmailError, "Email nije ispravan.")
             hasErrors = true
@@ -66,31 +56,17 @@ export default function RegisterForm() {
 
         setLoading(true)
 
-        const res = await fetch("/api/register", {
-            method: "POST",
-            body: JSON.stringify({
-                firstName,
-                lastName,
-                email,
-                password,
-            }),
+        const res = await signIn("credentials", {
+            email,
+            password,
+            // callbackUrl: "/nalog",
+            redirect: false,
         })
-
-        const resBody = await res.json()
-
-        if (resBody.success) {
-            await signIn("credentials", {
-                email,
-                password,
-                callbackUrl: "/nalog",
-            })
+        setLoading(false)
+        if (res?.error) {
+            throwError(setLoginError, res.error)
         } else {
-            if (resBody.message) {
-                throwError(setRegistrationError, resBody.message)
-            } else {
-                throwError(setRegistrationError, "Došlo je do greške. Pokušajte ponovo kasnije.")
-            }
-            setLoading(false)
+            push("/nalog")
         }
     }
 
@@ -98,20 +74,16 @@ export default function RegisterForm() {
         <div className="w-full flex justify-center items-center px-sideSpace">
             <div className="w-full max-w-lg">
                 <div className="p-4 rounded-lg border-2 border-gray-200 flex flex-col gap-4">
-                    <h1 className="text-center text-2xl font-bold">Registracija</h1>
-                    <div className="flex gap-2 sm:gap-4 flex-col sm:flex-row">
-                        <TextInput id="name" value={firstName} setValue={setFirstName} error={firstNameError} setError={setFirstNameError} label="Ime" />
-                        <TextInput id="lastname" value={lastName} setValue={setLastName} error={lastNameError} setError={setLastNameError} label="Prezime" />
-                    </div>
+                    <h1 className="text-center text-2xl font-bold">Prijava</h1>
                     <TextInput id="email" value={email} setValue={setEmail} error={emailError} setError={setEmailError} label="Email" />
                     <TextInput id="password" value={password} setValue={setPassword} error={passwordError} setError={setPasswordError} label="Lozinka" type="password" />
                     <button onClick={handleRegister} disabled={loading} className="bg-primary h-10 flex justify-center items-center w-full rounded-lg text-white font-semibold hover:bg-primaryDarker transition-colors disabled:cursor-default active:brightness-90">
-                        {loading ? <LoadingDots /> : "Registruj se"}
+                        {loading ? <LoadingDots /> : "Prijavi se"}
                     </button>
-                    {registrationError ? <div className="text-white font-semibold bg-red-500 p-2 rounded-lg">{registrationError}</div> : ""}
+                    {loginError ? <div className="text-white font-semibold bg-red-500 p-2 rounded-lg">{loginError}</div> : ""}
                 </div>
-                <Link href={"/login"} className="text-center block w-full mt-4 text-primary hover:text-primaryDarker transition-colors">
-                    Već imaš nalog? Uloguj se
+                <Link href={"/register"} className="text-center block w-full mt-4 text-primary hover:text-primaryDarker transition-colors">
+                    Nemaš nalog? Registruj se
                 </Link>
             </div>
         </div>

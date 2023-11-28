@@ -1,0 +1,19 @@
+.product-swiper .swiper-pagination-bullet{
+    width: 72px;
+    height: 72px;
+    opacity: 0.8;
+    border: 2px solid #ffffff;
+    border-radius: 0;
+}
+.product-swiper .swiper-pagination-bullet-active{
+    opacity: 1;
+    border: 2px solid var(--primary);
+}
+.product-swiper .swiper-pagination{
+    padding-top: 12px;
+    position: static;
+}
+.product-swiper .swiper-pagination img{
+    object-fit: cover;
+    height: 100%;
+}
