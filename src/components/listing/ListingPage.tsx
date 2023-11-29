@@ -15,11 +15,12 @@ export default function page({ listing }: { listing: Listing }) {
                     <ListingSwiper images={listing.images} />
                 </div>
                 <div className="">
-                    <h1 className="text-3xl font-bold">{listing.title}</h1>
+                    <h1 className="text-3xl font-bold mb-4">{listing.title}</h1>
                     <div>
                         <p>{listing.description}</p>
-                        <p>{listing.address.city}</p>
-                        <p>{listing.address.street}</p>
+                    </div>
+                    <div className="my-4 font-semibold text-lg">
+                        Lokacija: {listing.address.city}, {listing.address.street}
                     </div>
 
                     <div className="p-1 bg-gray-100 rounded-lg border-2 border-gray-300">

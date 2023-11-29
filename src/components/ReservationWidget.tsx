@@ -16,7 +16,7 @@ export default async function ReservationWidget({ reservation }: { reservation: 
     const endMinutes = reservationEndDate.getMinutes()
     return (
         <Link href={`/nalog/rezervacije/${reservation._id}`} className="block p-4 border-2 border-gray-200 rounded-lg bg-white hover:bg-gray-200 transition-colors">
-            <img src={listing.images[0]} className="w-full aspect-square object-cover rounded-lg" alt="" />
+            <img src={listing.images[0].url} className="w-full aspect-square object-cover rounded-lg" alt="" />
             <p className="font-semibold ">{listing.title}</p>
             <p className="">
                 {reservationStartDate.getDate()}.{reservationStartDate.getMonth() + 1}.{reservationStartDate.getFullYear()}.

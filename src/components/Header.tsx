@@ -1,9 +1,7 @@
 import { authOptions } from "@/tools/authOptions"
-import { faUser } from "@fortawesome/free-regular-svg-icons"
-import { faSignIn } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+
 import { getServerSession } from "next-auth"
-import { useSession } from "next-auth/react"
+
 import Link from "next/link"
 import HeaderLinks from "./HeaderLinks"
 

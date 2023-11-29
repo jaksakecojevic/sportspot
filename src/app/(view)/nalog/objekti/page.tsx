@@ -26,15 +26,26 @@ export default async function MyListings() {
             </Link>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mt-4">
                 {serializeData(listings).map((listing: Listing, index: number) => {
-                    return (
-                        <Link key={index} href={`/nalog/objekti/${listing._id}`} className="block p-4 border-2 border-gray-200 rounded-lg bg-white hover:bg-gray-200 transition-colors">
-                            <img src={listing.images[0]} className="w-full aspect-square object-cover rounded-lg" alt="" />
-                            <p className="font-semibold ">{listing.title}</p>
-                            <p className="text-sm">{listing.description}</p>
-                        </Link>
-                    )
+                    return <ListingCard listing={listing} key={index} />
                 })}
             </div>
         </div>
+    )
+}
+
+function ListingCard({ listing }: { listing: Listing }) {
+    const maxCharacters = 100
+    const limitDescription = (description: string) => {
+        if (description.length > maxCharacters) {
+            return description.substring(0, maxCharacters) + "..."
+        }
+        return description
+    }
+    return (
+        <Link href={`/nalog/objekti/${listing._id}`} className="block p-4 border-2 border-gray-200 rounded-lg bg-white hover:bg-gray-200 transition-colors">
+            <img src={listing.images[0].url} className="w-full aspect-square object-cover rounded-lg" alt="" />
+            <p className="font-semibold ">{listing.title}</p>
+            <p className="text-sm overflow-hidden">{limitDescription(listing.description)}</p>
+        </Link>
     )
 }

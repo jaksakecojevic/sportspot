@@ -1,3 +1,5 @@
+"use client"
+const maxCharacters = 600
 import { Dispatch, SetStateAction, useState } from "react"
 
 export default function DescriptionInput({ value, setValue, label, error, setError, id }: { value: string; setValue: Dispatch<SetStateAction<string>>; label?: string; error?: string; setError?: Dispatch<SetStateAction<string>>; id?: string }) {
@@ -6,7 +8,12 @@ export default function DescriptionInput({ value, setValue, label, error, setErr
 
     return (
         <label>
-            {errorHtml || label}
+            <div className="flex justify-between gap-2">
+                <div>{errorHtml || label}</div>
+                <div>
+                    ({value.length}/{maxCharacters})
+                </div>
+            </div>
             <div className="relative">
                 <textarea
                     value={value}
@@ -16,7 +23,10 @@ export default function DescriptionInput({ value, setValue, label, error, setErr
                         setFocused(true)
                     }}
                     onBlur={() => setFocused(false)}
-                    onChange={(e) => setValue(e.target.value)}
+                    onChange={(e) => {
+                        if (e.target.value.length > maxCharacters) return
+                        setValue(e.target.value)
+                    }}
                     className={`px-3 py-1 w-full block rounded-md outline-none border-2 resize-none min-h-[150px] ${error ? "border-red-500" : "border-gray-200"} focus:border-primary transition-border`}
                 />
             </div>

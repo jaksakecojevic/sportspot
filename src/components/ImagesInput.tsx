@@ -1,24 +1,25 @@
 import getFile from "@/tools/getFile"
 import uploadImages from "@/tools/uploadImages"
+import { ImageType } from "@/types"
 import { faImage } from "@fortawesome/free-regular-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Dispatch, SetStateAction } from "react"
 
-export default function ImagesInput({ images, setImages, imagesError, setImagesError }: { images: string[]; setImages: Dispatch<SetStateAction<string[]>>; imagesError: string; setImagesError: Dispatch<SetStateAction<string>> }) {
+export default function ImagesInput({ images, setImages, imagesError, setImagesError }: { images: ImageType[]; setImages: Dispatch<SetStateAction<ImageType[]>>; imagesError: string; setImagesError: Dispatch<SetStateAction<string>> }) {
     async function handleImageAdd() {
         if (setImagesError) setImagesError("")
 
         const files = Array.from((await getFile("image/*", true)) as FileList) as File[]
         setImages((current) => {
-            const loadingBlocks = files.map((file, index) => {
-                return "$loading"
+            const loadingBlocks = files.map(() => {
+                return { id: "$loading", url: "" }
             })
             const newImages = [...current, ...loadingBlocks]
             return newImages
         })
         const images = await uploadImages(files)
         setImages((current) => {
-            const newImages = [...current, ...images].filter((image) => image != "$loading")
+            const newImages = [...current, ...images].filter((image) => image.id != "$loading")
             return newImages
         })
     }
@@ -39,9 +40,9 @@ export default function ImagesInput({ images, setImages, imagesError, setImagesE
     )
 }
 
-function Image({ image, setImages }: { image: string; setImages: Dispatch<SetStateAction<string[]>> }) {
-    if (image == "$loading") return <LoadingBlock />
-    return <div style={{ backgroundImage: `url(${image})` }} className={`relative aspect-square draggable bg-contain bg-no-repeat bg-center rounded-lg border border-grayer bg-light`}></div>
+function Image({ image, setImages }: { image: ImageType; setImages: Dispatch<SetStateAction<ImageType[]>> }) {
+    if (image.id == "$loading") return <LoadingBlock />
+    return <div style={{ backgroundImage: `url(${image.url})` }} className={`relative aspect-square draggable bg-contain bg-no-repeat bg-center rounded-lg border border-grayer bg-light`}></div>
 }
 function LoadingBlock() {
     return (

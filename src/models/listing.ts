@@ -8,6 +8,10 @@ const addressSchema = new Schema({
     street: String,
     city: String,
 })
+const imageSchema = new Schema({
+    url: String,
+    id: String,
+})
 
 const listingSchema = new Schema(
     {
@@ -24,10 +28,13 @@ const listingSchema = new Schema(
             type: String,
             required: true,
         },
-        images: [String],
+        images: [imageSchema],
         pricePerHour: priceSchema,
         address: addressSchema,
-        category: String,
+        category: {
+            type: String,
+            default: "all",
+        },
         createdAt: {
             type: Date,
             default: Date.now,

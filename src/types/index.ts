@@ -1,10 +1,14 @@
+export interface ImageType {
+    url: string
+    id: string
+}
 export interface Listing {
     _id?: string
     id?: string
     ownerId?: string
     title: string
     description: string
-    images: string[]
+    images: ImageType[]
     pricePerHour: Price
     address: Address
     reservations?: Reservation[]

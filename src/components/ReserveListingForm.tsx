@@ -10,7 +10,6 @@ import TimeInput from "./inputs/TimeInput"
 import { Moment } from "moment"
 import FormButton from "./inputs/FormButton"
 import { useRouter } from "next/navigation"
-import { useSession } from "next-auth/react"
 
 export default function ReserveListingForm({ listing, user }: { listing: Listing; user: User }) {
     const { push } = useRouter()
@@ -129,7 +128,7 @@ export default function ReserveListingForm({ listing, user }: { listing: Listing
             <div className="w-full max-w-xl">
                 <div className="p-4 rounded-lg border-2 border-gray-200 flex flex-col gap-4">
                     <div className="flex justify-center w-full">
-                        <img src={listing.images[0]} className="rounded-lg h-[200px] object-cover w-full" width={500} alt="" />
+                        <img src={listing.images[0].url} className="rounded-lg h-[200px] object-cover w-full" width={500} alt="" />
                     </div>
                     <h1 className="text-center text-2xl font-bold">Rezerviši termin, {listing.title}</h1>
                     <div className="flex gap-2 w-full">
@@ -169,7 +168,7 @@ function Total({ listing, startTime, endTime }: { listing: Listing; startTime: s
                     {duration * listing.pricePerHour.amount} {listing.pricePerHour.currency} ({duration}h)
                 </p>
             </div>
-            <p>Plaćenje prilikom dolaska.</p>
+            <p>Plaćanje prilikom dolaska.</p>
         </>
     )
 }

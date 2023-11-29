@@ -5,18 +5,27 @@ import LoadingDots from "./LoadingDots"
 
 import TextInput from "./inputs/TextInput"
 import ImagesInput from "./ImagesInput"
-import { Category, Listing } from "@/types"
+import { Category, ImageType, Listing } from "@/types"
 import PriceInput from "./inputs/PriceInput"
 import DescriptionInput from "./inputs/DescriptionInput"
 import SelectInput from "./inputs/SelectInput"
 import { categoryOptions } from "@/tools/categoryOptions"
 import FormButton from "./inputs/FormButton"
+import { useRouter } from "next/navigation"
+import { revalidatePath } from "next/cache"
+
+function throwError(setError: Dispatch<SetStateAction<string>>, message: string, time = 3500) {
+    setError(message)
+    setTimeout(() => {
+        setError("")
+    }, time)
+}
 
 export default function EditListingForm(props: { listing: Listing }) {
     const [listing, setListing] = useState(props.listing)
     const [title, setTitle] = useState(listing.title)
     const [description, setDescription] = useState(listing.description)
-    const [images, setImages] = useState<string[]>(listing.images)
+    const [images, setImages] = useState<ImageType[]>(listing.images)
     const [priceAmount, setPriceAmount] = useState(listing.pricePerHour.amount)
     const [currency, setCurrency] = useState(listing.pricePerHour.currency)
 
@@ -42,13 +51,6 @@ export default function EditListingForm(props: { listing: Listing }) {
     const [changesMade, setChangesMade] = useState(false)
 
     const [loading, setLoading] = useState(false)
-
-    function throwError(setError: Dispatch<SetStateAction<string>>, message: string, time = 3500) {
-        setError(message)
-        setTimeout(() => {
-            setError("")
-        }, time)
-    }
 
     function isInvalid() {
         let hasErrors = false
@@ -104,15 +106,14 @@ export default function EditListingForm(props: { listing: Listing }) {
         }
     }
 
-    function sameStringArray(array1: string[], array2: string[]) {
-        if (array1.length != array2.length) return false
+    function sameImagesArray(array1: ImageType[], array2: ImageType[]) {
         return array1.every((value, index) => {
-            return value == array2[index]
+            return array2[index] && value.id == array2[index].id
         })
     }
 
     useEffect(() => {
-        if (title != listing.title || description != listing.description || !sameStringArray(images, listing.images) || priceAmount != listing.pricePerHour.amount || currency != listing.pricePerHour.currency || city != listing.address.city || street != listing.address.street || category != listing.category) {
+        if (title != listing.title || description != listing.description || !sameImagesArray(images, listing.images) || priceAmount != listing.pricePerHour.amount || currency != listing.pricePerHour.currency || city != listing.address.city || street != listing.address.street || category != listing.category) {
             setChangesMade(true)
         } else {
             setChangesMade(false)
@@ -130,7 +131,7 @@ export default function EditListingForm(props: { listing: Listing }) {
                 street,
             }
             const newListing = { ...current, ...{ title, description, images, pricePerHour: newPricePerHour, address: newAddress, category, free } }
-            console.log(newListing)
+
             return newListing
         })
     }
@@ -156,7 +157,66 @@ export default function EditListingForm(props: { listing: Listing }) {
                 </FormButton>
                 {creationError ? <div className="text-white font-semibold bg-red-500 p-2 rounded-lg">{creationError}</div> : ""}
                 {message ? <div className="text-white font-semibold bg-green-500 p-2 rounded-lg">{message}</div> : ""}
+                <div className="mt-8 flex justify-end">
+                    <DeleteButton listing={listing} />
+                </div>
             </div>
         </div>
+    )
+}
+
+function DeleteButton({ listing }: { listing: Listing }) {
+    const { push, refresh } = useRouter()
+    async function handleDelete() {
+        setLoading(true)
+
+        const res = await fetch("/api/delete-listing", {
+            method: "POST",
+            body: JSON.stringify({ listingId: listing._id }),
+        })
+
+        const resBody = await res.json()
+        setLoading(false)
+        if (resBody.success) {
+            push("/nalog/objekti")
+            refresh()
+        } else {
+            if (resBody.message) {
+                throwError(setDeletionError, resBody.message)
+            } else {
+                throwError(setDeletionError, "Došlo je do greške. Pokušajte ponovo kasnije.")
+            }
+        }
+    }
+    const [popupOn, setPopupOn] = useState(false)
+    const [loading, setLoading] = useState(false)
+
+    const [deletionError, setDeletionError] = useState("")
+
+    return (
+        <>
+            <button onClick={() => setPopupOn(true)} className="bg-red-500 hover:bg-red-700 transition-colors text-white font-semibold h-10 flex justify-center items-center rounded-lg px-4">
+                Obriši objekat
+            </button>
+            {popupOn ? (
+                <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center z-20 px-sideSpace">
+                    <div className="fixed top-0 left-0 w-full h-full bg-black opacity-50" onClick={() => setPopupOn(false)}></div>
+                    <div className="w-full bg-white rounded-lg p-4 max-w-md z-10">
+                        <p>Da li sigurno želiš da obrišeš ovaj objekat?</p>
+                        <div className="flex gap-2 mt-4">
+                            <button onClick={() => setPopupOn(false)} className="bg-gray-300 hover:bg-gray-400 transition-colors font-semibold h-10 w-32 flex justify-center items-center rounded-lg px-4">
+                                Ne
+                            </button>
+                            <button onClick={handleDelete} className="bg-red-500 hover:bg-red-700 transition-colors text-white font-semibold h-10 w-32 flex justify-center items-center rounded-lg px-4">
+                                {loading ? <LoadingDots /> : "Obriši"}
+                            </button>
+                        </div>
+                        {deletionError ? <div className="text-white font-semibold bg-red-500 p-2 rounded-lg">{deletionError}</div> : ""}
+                    </div>
+                </div>
+            ) : (
+                ""
+            )}
+        </>
     )
 }

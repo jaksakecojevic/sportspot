@@ -12,6 +12,7 @@ export async function GET(req: NextRequest) {
     if (query) {
         filter.title = { $regex: new RegExp(query, "i") }
     }
+
     if (category && category != "all") {
         filter.category = category
     }

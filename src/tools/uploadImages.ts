@@ -1,15 +1,17 @@
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
 import { storage } from "./firebase"
+import { v4 } from "uuid"
 
 export default async function uploadImages(files: File[]) {
-    const urls = await Promise.all(
+    const images = await Promise.all(
         files.map(async (file) => {
-            const imageRef = ref(storage, `listingImages/${file.name}`)
+            const id = v4()
+            const imageRef = ref(storage, `listingImages/${id}/${file.name}`)
 
             await uploadBytes(imageRef, file)
             const url = await getDownloadURL(imageRef)
-            return url
+            return { url, id }
         })
     )
-    return urls
+    return images
 }

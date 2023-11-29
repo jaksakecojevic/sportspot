@@ -5,18 +5,19 @@ import LoadingDots from "./LoadingDots"
 
 import TextInput from "./inputs/TextInput"
 import ImagesInput from "./ImagesInput"
-import { Category } from "@/types"
+import { Category, ImageType } from "@/types"
 import DescriptionInput from "./inputs/DescriptionInput"
 import PriceInput from "./inputs/PriceInput"
 import SelectInput from "./inputs/SelectInput"
 import { useRouter } from "next/navigation"
 import { categoryOptions } from "@/tools/categoryOptions"
+import { revalidatePath } from "next/cache"
 
 export default function AddListingForm() {
-    const { push } = useRouter()
+    const { push, refresh } = useRouter()
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
-    const [images, setImages] = useState<string[]>([])
+    const [images, setImages] = useState<ImageType[]>([])
     const [priceAmount, setPriceAmount] = useState(0)
     const [currency, setCurrency] = useState("RSD")
 
@@ -89,8 +90,8 @@ export default function AddListingForm() {
         const resBody = await res.json()
         setLoading(false)
         if (resBody.success) {
-            if (resBody.listingId) return push(`/objekti/${resBody.listingId}`)
-            push("/")
+            push("/nalog/objekti")
+            refresh()
         } else {
             if (resBody.message) {
                 throwError(setCreationError, resBody.message)

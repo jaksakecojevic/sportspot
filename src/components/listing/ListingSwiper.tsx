@@ -1,5 +1,5 @@
 "use client"
-import { Listing } from "@/types"
+import { ImageType, Listing } from "@/types"
 
 import { Swiper, SwiperSlide } from "swiper/react"
 import "swiper/css"
@@ -9,11 +9,11 @@ import { Pagination } from "swiper/modules"
 import { PaginationOptions } from "swiper/types"
 import "./CustomSwiper.css"
 
-export default function ListingSwiper({ images }: { images: string[] }) {
+export default function ListingSwiper({ images }: { images: ImageType[] }) {
     const paginationOptions: PaginationOptions = {
         clickable: true,
         renderBullet: function (index, className) {
-            return `<span class="${className}" data-variant=${images[index]}><img className="object-cover h-full" src=${images[index]} /></span>`
+            return `<span class="${className}" data-variant=${images[index]}><img className="object-cover h-full" src=${images[index].url} /></span>`
         },
     }
 
@@ -24,7 +24,7 @@ export default function ListingSwiper({ images }: { images: string[] }) {
             {images.map((image, index) => {
                 return (
                     <SwiperSlide key={index}>
-                        <img src={image} alt="" className={`${imageFit == "fit" ? "aspect-square" : ""} object-contain bg-gray`} />
+                        <img src={image.url} alt="" className={`${imageFit == "fit" ? "aspect-square" : ""} object-contain bg-gray`} />
                     </SwiperSlide>
                 )
             })}

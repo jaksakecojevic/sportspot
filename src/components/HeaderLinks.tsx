@@ -11,7 +11,7 @@ export default function HeaderLinks({ session }: { session: Session | null }) {
 
     if (session && session.user) {
         return (
-            <Link className={`${pathname.includes("/nalog") ? "border-primary" : ""} font-medium px-4 py-4 rounded-sm border-b-4 border-transparent hover:border-primary transition-border duration-200 flex items-center gap-2`} href={"/nalog"}>
+            <Link className={`${pathname.includes("/nalog") ? "border-primary" : "border-transparent"} font-medium px-4 py-4 rounded-sm border-b-4  hover:border-primary transition-border duration-200 flex items-center gap-2`} href={"/nalog"}>
                 <FontAwesomeIcon icon={faUser} />
                 <span className="hidden sm:block">{session.user.name}</span>
             </Link>
