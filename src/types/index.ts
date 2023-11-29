@@ -11,6 +11,7 @@ export interface Listing {
     category?: string
 }
 export interface Reservation {
+    _id?: string
     id?: string
     ownerId?: string
     listingId?: string

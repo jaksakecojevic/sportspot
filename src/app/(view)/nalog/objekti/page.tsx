@@ -19,6 +19,7 @@ export default async function MyListings() {
 
     return (
         <div>
+            <h2 className="text-xl font-semibold mb-4">Moji objekti</h2>
             <Link className="bg-green-600 w-fit text-white px-2 py-1 rounded-lg flex items-center gap-2 font-bold hover:bg-green-800 transition-colors" href={"/dodaj-objekat"}>
                 <FontAwesomeIcon icon={faAdd} className="block" />
                 Dodaj objekat

@@ -3,12 +3,15 @@ import { faEye, faEyeLowVision } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Dispatch, SetStateAction, useState } from "react"
 import LoadingDots from "./LoadingDots"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import Link from "next/link"
 import { signIn } from "next-auth/react"
 import TextInput from "./inputs/TextInput"
 
 export default function RegisterForm() {
+    const params = useSearchParams()
+    const redirectId = params.get("reservationRedirect")
+
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
     const [email, setEmail] = useState("")
@@ -82,7 +85,7 @@ export default function RegisterForm() {
             await signIn("credentials", {
                 email,
                 password,
-                callbackUrl: "/nalog",
+                callbackUrl: redirectId ? `/rezervisi/${redirectId}` : "/nalog",
             })
         } else {
             if (resBody.message) {
@@ -110,7 +113,7 @@ export default function RegisterForm() {
                     </button>
                     {registrationError ? <div className="text-white font-semibold bg-red-500 p-2 rounded-lg">{registrationError}</div> : ""}
                 </div>
-                <Link href={"/login"} className="text-center block w-full mt-4 text-primary hover:text-primaryDarker transition-colors">
+                <Link href={redirectId ? `/login?reservationRedirect=${redirectId}` : `/login`} className="text-center block w-full mt-4 text-primary hover:text-primaryDarker transition-colors">
                     Već imaš nalog? Uloguj se
                 </Link>
             </div>

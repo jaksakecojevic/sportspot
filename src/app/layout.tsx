@@ -5,6 +5,7 @@ import { config } from "@fortawesome/fontawesome-svg-core"
 import "@fortawesome/fontawesome-svg-core/styles.css"
 
 import AuthProvider from "@/components/AuthProvider"
+import StyledComponentsRegistry from "@/components/AntdRegistry"
 config.autoAddCss = false
 
 const inter = Inter({ subsets: ["latin"] })
@@ -19,7 +20,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <html lang="en">
             <AuthProvider>
                 <body className={`${inter.className}`}>
-                    <main className="h-full">{children}</main>
+                    <StyledComponentsRegistry>
+                        <main className="h-full">{children}</main>
+                    </StyledComponentsRegistry>
                 </body>
             </AuthProvider>
         </html>

@@ -26,7 +26,7 @@ export async function GET(req: NextRequest) {
             sortObject = { "pricePerHour.amount": 1 }
         }
     }
-
+    await connectMongo()
     const listings = await listingModel.find(filter).sort(sortObject)
 
     return NextResponse.json(listings)

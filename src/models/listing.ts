@@ -8,11 +8,7 @@ const addressSchema = new Schema({
     street: String,
     city: String,
 })
-const reservationSchema = new Schema({
-    startDate: Date,
-    endDate: Date,
-    paid: Boolean,
-})
+
 const listingSchema = new Schema(
     {
         ownerId: {
@@ -31,7 +27,6 @@ const listingSchema = new Schema(
         images: [String],
         pricePerHour: priceSchema,
         address: addressSchema,
-        reservations: [reservationSchema],
         category: String,
         createdAt: {
             type: Date,

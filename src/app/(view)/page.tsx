@@ -2,6 +2,7 @@ import ListingRows from "@/components/ListingRows"
 import listingModel from "@/models/listing"
 import { connectMongo } from "@/tools/db"
 import serializeData from "@/tools/serializeData"
+import { Listing } from "@/types"
 export const dynamic = "force-dynamic"
 
 export default async function Home() {
@@ -13,7 +14,7 @@ export default async function Home() {
     //         images: ["https://www.balon-zvezda-ada.rs/wp-content/uploads/2013/03/IMG_7306.jpg"],
     //         pricePerHour: {
     //             amount: 4000,
-    //             currencyCode: "RSD",
+    //             currency: "RSD",
     //         },
     //         address: {
     //             street: "Južni Bulevar",
@@ -27,7 +28,7 @@ export default async function Home() {
     //         images: ["https://www.boma-court.com/images/portfolio/basketball.jpg"],
     //         pricePerHour: {
     //             amount: 4500,
-    //             currencyCode: "RSD",
+    //             currency: "RSD",
     //         },
     //         address: {
     //             street: "Dorćol",
@@ -41,7 +42,7 @@ export default async function Home() {
     //         images: ["https://konstruktiva.rs/wp-content/uploads/2016/06/teniski-teren-ribarska-banja-3.jpg"],
     //         pricePerHour: {
     //             amount: 3000,
-    //             currencyCode: "RSD",
+    //             currency: "RSD",
     //         },
     //         address: {
     //             street: "Banjica",
@@ -55,7 +56,7 @@ export default async function Home() {
     //         images: ["https://membraning.com/wp-content/uploads/2017/12/balon_hala_vesko_2013_6.jpg"],
     //         pricePerHour: {
     //             amount: 5000,
-    //             currencyCode: "RSD",
+    //             currency: "RSD",
     //         },
     //         address: {
     //             street: "Zvezdara",
@@ -69,7 +70,7 @@ export default async function Home() {
     //         images: ["https://tasmajdan.rs/wp-content/uploads/2022/12/DSC_6690aS-scaled.jpg"],
     //         pricePerHour: {
     //             amount: 6000,
-    //             currencyCode: "RSD",
+    //             currency: "RSD",
     //         },
     //         address: {
     //             street: "Tašmajdan",
@@ -83,7 +84,7 @@ export default async function Home() {
     //         images: ["https://badmintonklubpancevo.files.wordpress.com/2013/06/milorad-sala.jpg"],
     //         pricePerHour: {
     //             amount: 3500,
-    //             currencyCode: "RSD",
+    //             currency: "RSD",
     //         },
     //         address: {
     //             street: "Novi Beograd",
@@ -94,7 +95,7 @@ export default async function Home() {
     await connectMongo()
     const listings = await listingModel.find()
     return (
-        <div className="px-sideSpace py-4">
+        <div className="px-sideSpace py-4 min-h-screen">
             <ListingRows listings={serializeData(listings)} />
         </div>
     )

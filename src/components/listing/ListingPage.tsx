@@ -1,9 +1,13 @@
+"use client"
 import { Listing } from "@/types"
 import ListingSwiper from "./ListingSwiper"
 import { list } from "firebase/storage"
 import Link from "next/link"
+import { useSession } from "next-auth/react"
 
 export default function page({ listing }: { listing: Listing }) {
+    const session = useSession()
+    const loggedIn = session.data
     return (
         <div className="px-sideSpace py-8">
             <div className="flex gap-4 flex-col lg:flex-row items-center lg:items-stretch">
@@ -24,8 +28,8 @@ export default function page({ listing }: { listing: Listing }) {
                             {listing.pricePerHour.amount} {listing.pricePerHour.currency}
                         </div>
                     </div>
-                    <Link href={`/rezervisi/${listing._id}`} className="w-fit bg-primary block text-white font-semibold rounded-lg px-4 py-2 mt-6 transition-colors hover:bg-primaryDarker">
-                        Rezervisi termin
+                    <Link href={!loggedIn ? `/login?reservationRedirect=${listing._id}` : `/rezervisi/${listing._id}`} className="w-fit bg-primary block text-white font-semibold rounded-lg px-4 py-2 mt-6 transition-colors hover:bg-primaryDarker">
+                        Rezerviši termin
                     </Link>
                 </div>
             </div>

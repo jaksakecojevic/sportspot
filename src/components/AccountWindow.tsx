@@ -8,7 +8,7 @@ export default function AccountWindow({ children }: { children: React.ReactNode 
     return (
         <div className="w-full flex justify-center px-sideSpace pt-24 pb-96">
             <div className="p-4 rounded-lg border-2 border-gray-200 flex flex-col sm:flex-row gap-4 w-full sm:min-h-[400px]">
-                <div className="flex flex-col gap-1 sm:max-w-[160px] h-full flex-1">
+                <div className="flex flex-col gap-1 sm:w-[150px] w-full">
                     <Link href="/nalog" className={`px-2 py-1 rounded-lg   transition-colors ${pathname == "/nalog" ? "bg-primary text-white hover:bg-primaryDarker" : "bg-gray-200 hover:bg-gray-300"}`}>
                         Nalog
                     </Link>
@@ -19,7 +19,7 @@ export default function AccountWindow({ children }: { children: React.ReactNode 
                         Objekti
                     </Link>
                 </div>
-                <div>{children}</div>
+                <div className="flex-1">{children}</div>
             </div>
         </div>
     )

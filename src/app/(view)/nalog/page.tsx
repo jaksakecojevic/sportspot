@@ -13,6 +13,7 @@ export default async function Account() {
 
     return (
         <div className="flex flex-col gap-2 justify-between h-full">
+            <h2 className="text-xl font-semibold mb-4">Moj nalog</h2>
             <div className="flex gap-2 items-center">
                 Ime: <div className="p-1 bg-gray-100 rounded-lg border-2 border-gray-300">{user?.firstName}</div>
             </div>

@@ -5,17 +5,34 @@ import { NextRequest, NextResponse } from "next/server"
 import userModel from "@/models/user"
 import listingModel from "@/models/listing"
 import { authOptions } from "@/tools/authOptions"
-import reservationModel from "@/models/listing"
+import reservationModel from "@/models/reservation"
 export async function POST(req: NextRequest) {
     const session = await getServerSession(authOptions)
     await connectMongo()
-    const { listingId, firstName, lastName, phoneNumber, email, startDate, endDate } = await req.json()
+    const { listingId, firstName, lastName, phoneNumber, email, day, startTime, endTime } = await req.json()
 
-    var user
+    if (!session || !session.user) return NextResponse.json({ message: "Korisnik nije autorizovan.", success: false })
+    const user = await userModel.findOne({ email: session.user.email })
+    if (!user) return NextResponse.json({ success: false, message: "Došlo je do greške. Pokušajte ponovo kasnije." })
 
-    if (session && session.user) {
-        user = await userModel.findOne({ email: session.user.email })
-    }
+    const dayDate = new Date(day).getDate()
+
+    const startHours = startTime.split(":")[0]
+    const startMinutes = startTime.split(":")[1]
+    const startDate = new Date()
+
+    startDate.setDate(dayDate)
+    startDate.setHours(startHours)
+    startDate.setMinutes(startMinutes)
+
+    const endHours = endTime.split(":")[0]
+    const endMinutes = endTime.split(":")[1]
+    const endDate = new Date()
+    endDate.setDate(dayDate)
+    endDate.setHours(endHours)
+    endDate.setMinutes(endMinutes)
+
+    console.log(listingId)
 
     const newReservation = await reservationModel.create({
         ownerId: user.id,
@@ -30,5 +47,5 @@ export async function POST(req: NextRequest) {
         endDate,
     })
 
-    return NextResponse.json({ success: true, message: "Uspešno kreirana rezervacija." })
+    return NextResponse.json({ success: true, message: "Uspešno kreirana rezervacija.", reservationId: newReservation.id })
 }

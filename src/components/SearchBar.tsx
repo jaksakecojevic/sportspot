@@ -4,6 +4,7 @@ import { Category, Listing } from "@/types"
 import { faArrowDown, faArrowUp, faSearch } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Dispatch, SetStateAction, useEffect, useLayoutEffect, useRef, useState } from "react"
+import LoadingDots from "./LoadingDots"
 
 export default function SearchBar({ setListings }: { setListings: Dispatch<SetStateAction<Listing[]>> }) {
     const [query, setQuery] = useState("")
@@ -11,13 +12,16 @@ export default function SearchBar({ setListings }: { setListings: Dispatch<SetSt
     const [sort, setSort] = useState<"expensive" | "cheap">("cheap")
 
     const [lastSearchedQuery, setLastSearchedQuery] = useState("")
+    const [loading, setLoading] = useState(false)
 
     async function handleSearch() {
+        setLoading(true)
         const newListings = await getListings({
             query,
             category,
             sort,
         })
+        setLoading(false)
         setListings(newListings)
         setLastSearchedQuery(query)
     }
@@ -82,6 +86,7 @@ export default function SearchBar({ setListings }: { setListings: Dispatch<SetSt
                     {sort == "expensive" ? <FontAwesomeIcon icon={faArrowUp} /> : <FontAwesomeIcon icon={faArrowDown} />}
                 </button>
             </div>
+            <div className="h-8 flex items-center">{loading ? <LoadingDots /> : ""}</div>
         </div>
     )
 }
