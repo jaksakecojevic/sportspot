@@ -6,8 +6,9 @@ import userModel from "@/models/user"
 import listingModel from "@/models/listing"
 import { authOptions } from "@/tools/authOptions"
 import sanitize from "@/tools/sanitize"
-// @ts-ignore
-import convert from "cyrillic-to-latin"
+
+import { eurConversionRate } from "@/tools/config"
+import { toSearchableString } from "@/tools/normalizeString"
 
 export async function POST(req: NextRequest) {
     const session = await getServerSession(authOptions)
@@ -19,14 +20,21 @@ export async function POST(req: NextRequest) {
     const maxCharacters = 600
     if (description.length > maxCharacters) return NextResponse.json({ success: false, message: `Opis može sadržati maksimalno ${maxCharacters} karaktera.` })
 
+    var amountInRsd = priceAmount
+
+    if (currency == "EUR") {
+        amountInRsd = priceAmount * eurConversionRate
+    }
+
     const newListing = await listingModel.create({
         ownerId: user.id,
         title: title,
-        searchString: convert(title).toLowerCase(),
+        searchString: toSearchableString(title),
         description: sanitize(description),
         images: images,
         pricePerHour: {
             amount: priceAmount,
+            amountInRsd,
             currency,
         },
         address: {

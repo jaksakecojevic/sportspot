@@ -2,6 +2,7 @@ import { Schema, model, models } from "mongoose"
 
 const priceSchema = new Schema({
     amount: Number,
+    amountInRsd: Number,
     currency: String,
 })
 const addressSchema = new Schema({

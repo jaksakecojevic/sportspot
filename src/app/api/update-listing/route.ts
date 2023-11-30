@@ -6,8 +6,8 @@ import userModel from "@/models/user"
 import listingModel from "@/models/listing"
 import { authOptions } from "@/tools/authOptions"
 
-// @ts-ignore
-import convert from "cyrillic-to-latin"
+import { eurConversionRate } from "@/tools/config"
+import { toSearchableString } from "@/tools/normalizeString"
 
 export async function POST(req: NextRequest) {
     const session = await getServerSession(authOptions)
@@ -28,11 +28,26 @@ export async function POST(req: NextRequest) {
 
     if (title) {
         update.title = title
-        update.searchString = convert(title).toLowerCase()
+
+        update.searchString = toSearchableString(title)
     }
     if (description) update.description = description
-    if (priceAmount) update["pricePerHour.amount"] = priceAmount
-    if (currency) update["pricePerHour.currency"] = currency
+    if (priceAmount) {
+        update["pricePerHour.amount"] = priceAmount
+        if (listing.currency == "EUR" || currency == "EUR") {
+            update["pricePerHour.amountInRsd"] = priceAmount * eurConversionRate
+        } else if (currency == "RSD") {
+            update["pricePerHour.amountInRsd"] = priceAmount
+        }
+    }
+    if (currency) {
+        update["pricePerHour.currency"] = currency
+        if (listing.currency == "EUR" || currency == "EUR") {
+            update["pricePerHour.amountInRsd"] = priceAmount * eurConversionRate
+        } else if (currency == "RSD") {
+            update["pricePerHour.amountInRsd"] = priceAmount
+        }
+    }
     if (city) update["address.city"] = city
     if (street) update["address.street"] = street
     if (category) update.category = category

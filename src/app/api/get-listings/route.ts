@@ -1,9 +1,9 @@
 import listingModel from "@/models/listing"
 import { connectMongo } from "@/tools/db"
-import { getServerSession } from "next-auth"
+
 import { NextRequest, NextResponse } from "next/server"
-// @ts-ignore
-import convert from "cyrillic-to-latin"
+
+import { toSearchableString } from "@/tools/normalizeString"
 export async function GET(req: NextRequest) {
     const query = req.nextUrl.searchParams.get("query")
     const category = req.nextUrl.searchParams.get("category")
@@ -12,7 +12,8 @@ export async function GET(req: NextRequest) {
     var filter: any = {}
 
     if (query) {
-        filter.searchString = { $regex: new RegExp(convert(query), "i") }
+        console.log(toSearchableString(query))
+        filter.searchString = { $regex: new RegExp(toSearchableString(query), "i") }
     }
 
     if (category && category != "all") {
@@ -23,10 +24,10 @@ export async function GET(req: NextRequest) {
 
     if (sort) {
         if (sort == "cheap") {
-            sortObject = { "pricePerHour.amount": -1 }
+            sortObject = { "pricePerHour.amountInRsd": -1 }
         }
         if (sort == "expensive") {
-            sortObject = { "pricePerHour.amount": 1 }
+            sortObject = { "pricePerHour.amountInRsd": 1 }
         }
     }
     await connectMongo()
