@@ -21,6 +21,7 @@ const reservationSchema = new Schema(
         clientInfo: clientInfoSchema,
         startDate: Date,
         endDate: Date,
+        status: String,
         createdAt: {
             type: Date,
             default: Date.now,

@@ -32,8 +32,6 @@ export async function POST(req: NextRequest) {
     endDate.setHours(endHours)
     endDate.setMinutes(endMinutes)
 
-    console.log(listingId)
-
     const newReservation = await reservationModel.create({
         ownerId: user.id,
         listingId,
@@ -45,6 +43,7 @@ export async function POST(req: NextRequest) {
         },
         startDate,
         endDate,
+        status: "open",
     })
 
     return NextResponse.json({ success: true, message: "Uspešno kreirana rezervacija.", reservationId: newReservation.id })

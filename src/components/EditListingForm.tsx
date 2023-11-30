@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import LoadingDots from "./LoadingDots"
 
 import TextInput from "./inputs/TextInput"
-import ImagesInput from "./ImagesInput"
+import ImagesInput from "./inputs/ImagesInput"
 import { Category, ImageType, Listing } from "@/types"
 import PriceInput from "./inputs/PriceInput"
 import DescriptionInput from "./inputs/DescriptionInput"
@@ -13,13 +13,7 @@ import { categoryOptions } from "@/tools/categoryOptions"
 import FormButton from "./inputs/FormButton"
 import { useRouter } from "next/navigation"
 import { revalidatePath } from "next/cache"
-
-function throwError(setError: Dispatch<SetStateAction<string>>, message: string, time = 3500) {
-    setError(message)
-    setTimeout(() => {
-        setError("")
-    }, time)
-}
+import throwError from "@/tools/throwError"
 
 export default function EditListingForm(props: { listing: Listing }) {
     const [listing, setListing] = useState(props.listing)
@@ -211,7 +205,7 @@ function DeleteButton({ listing }: { listing: Listing }) {
                                 {loading ? <LoadingDots /> : "Obriši"}
                             </button>
                         </div>
-                        {deletionError ? <div className="text-white font-semibold bg-red-500 p-2 rounded-lg">{deletionError}</div> : ""}
+                        {deletionError ? <div className="text-white font-semibold bg-red-500 p-2 rounded-lg mt-4">{deletionError}</div> : ""}
                     </div>
                 </div>
             ) : (

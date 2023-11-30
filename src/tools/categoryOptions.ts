@@ -19,4 +19,24 @@ export const categoryOptions = [
         label: "Bazen",
         value: "pool",
     },
+    {
+        label: "Kuglanje",
+        value: "bowling",
+    },
+    {
+        label: "Klizanje",
+        value: "iceskate",
+    },
+    {
+        label: "Boćanje",
+        value: "bocce",
+    },
+    {
+        label: "Golf",
+        value: "golf",
+    },
+    {
+        label: "Sportovi sa reketima",
+        value: "racket-sports",
+    },
 ]

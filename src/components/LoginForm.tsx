@@ -9,6 +9,7 @@ import { signIn } from "next-auth/react"
 import TextInput from "./inputs/TextInput"
 
 export default function LoginForm() {
+    const { push, refresh } = useRouter()
     const params = useSearchParams()
     const redirectId = params.get("reservationRedirect")
     const [email, setEmail] = useState("")
@@ -52,7 +53,7 @@ export default function LoginForm() {
         return hasErrors
     }
 
-    async function handleRegister() {
+    async function handleLogin() {
         if (isInvalid()) return
 
         setLoading(true)
@@ -60,11 +61,14 @@ export default function LoginForm() {
         const res = await signIn("credentials", {
             email,
             password,
-            callbackUrl: redirectId ? `/rezervisi/${redirectId}` : "/nalog",
+            redirect: false,
         })
         setLoading(false)
         if (res?.error) {
             throwError(setLoginError, res.error)
+        } else {
+            push(redirectId ? `/rezervisi/${redirectId}` : "/nalog")
+            refresh()
         }
     }
 
@@ -74,8 +78,21 @@ export default function LoginForm() {
                 <div className="p-4 rounded-lg border-2 border-gray-200 flex flex-col gap-4">
                     <h1 className="text-center text-2xl font-bold">Prijava</h1>
                     <TextInput id="email" value={email} setValue={setEmail} error={emailError} setError={setEmailError} label="Email" />
-                    <TextInput id="password" value={password} setValue={setPassword} error={passwordError} setError={setPasswordError} label="Lozinka" type="password" />
-                    <button onClick={handleRegister} disabled={loading} className="bg-primary h-10 flex justify-center items-center w-full rounded-lg text-white font-semibold hover:bg-primaryDarker transition-colors disabled:cursor-default active:brightness-90">
+                    <TextInput
+                        id="password"
+                        value={password}
+                        onKeyUp={(e) => {
+                            if (e.key == "Enter") {
+                                handleLogin()
+                            }
+                        }}
+                        setValue={setPassword}
+                        error={passwordError}
+                        setError={setPasswordError}
+                        label="Lozinka"
+                        type="password"
+                    />
+                    <button onClick={handleLogin} disabled={loading} className="bg-primary h-10 flex justify-center items-center w-full rounded-lg text-white font-semibold hover:bg-primaryDarker transition-colors disabled:cursor-default active:brightness-90">
                         {loading ? <LoadingDots /> : "Prijavi se"}
                     </button>
                     {loginError ? <div className="text-white font-semibold bg-red-500 p-2 rounded-lg">{loginError}</div> : ""}

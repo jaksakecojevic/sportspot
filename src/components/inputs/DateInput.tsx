@@ -18,7 +18,6 @@ export default function DateInput({ date, setDate, error, setError, label }: { d
                 className={`!border-2 !block cursor-pointer !shadow-none ${error ? "!border-red-500" : "!border-gray-200"} !focus:border-primary`}
                 onChange={(e) => {
                     setDate(e?.toDate() as Date)
-                    console.log(e?.toDate())
                 }}
                 onFocus={() => {
                     if (setError) setError("")

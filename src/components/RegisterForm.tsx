@@ -107,7 +107,20 @@ export default function RegisterForm() {
                         <TextInput id="lastname" value={lastName} setValue={setLastName} error={lastNameError} setError={setLastNameError} label="Prezime" />
                     </div>
                     <TextInput id="email" value={email} setValue={setEmail} error={emailError} setError={setEmailError} label="Email" />
-                    <TextInput id="password" value={password} setValue={setPassword} error={passwordError} setError={setPasswordError} label="Lozinka" type="password" />
+                    <TextInput
+                        id="password"
+                        value={password}
+                        setValue={setPassword}
+                        onKeyUp={(e) => {
+                            if (e.key == "Enter") {
+                                handleRegister()
+                            }
+                        }}
+                        error={passwordError}
+                        setError={setPasswordError}
+                        label="Lozinka"
+                        type="password"
+                    />
                     <button onClick={handleRegister} disabled={loading} className="bg-primary h-10 flex justify-center items-center w-full rounded-lg text-white font-semibold hover:bg-primaryDarker transition-colors disabled:cursor-default active:brightness-90">
                         {loading ? <LoadingDots /> : "Registruj se"}
                     </button>

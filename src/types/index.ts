@@ -27,6 +27,7 @@ export interface Reservation {
     }
     startDate: Date
     endDate: Date
+    status: ReservationStatus
 }
 export interface Price {
     amount: number
@@ -44,3 +45,4 @@ export interface User {
     createdAt: string
 }
 export type Category = "all" | "football" | "basketball" | "tennis" | "pool"
+export type ReservationStatus = "open" | "finished" | "cancelled"

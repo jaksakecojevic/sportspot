@@ -5,6 +5,7 @@ import { faArrowDown, faArrowUp, faSearch } from "@fortawesome/free-solid-svg-ic
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Dispatch, SetStateAction, useEffect, useLayoutEffect, useRef, useState } from "react"
 import LoadingDots from "./LoadingDots"
+import { categoryOptions } from "@/tools/categoryOptions"
 
 export default function SearchBar({ setListings }: { setListings: Dispatch<SetStateAction<Listing[]>> }) {
     const [query, setQuery] = useState("")
@@ -64,11 +65,13 @@ export default function SearchBar({ setListings }: { setListings: Dispatch<SetSt
                     }}
                     className="px-3 rounded-lg outline-none cursor-pointer h-full"
                 >
-                    <option value="all">Svi</option>
-                    <option value="football">Fudbal</option>
-                    <option value="basketball">Košarka</option>
-                    <option value="tennis">Tenis</option>
-                    <option value="pool">Bazen</option>
+                    {categoryOptions.map((option, index) => {
+                        return (
+                            <option key={index} value={option.value}>
+                                {option.label}
+                            </option>
+                        )
+                    })}
                 </select>
             </div>
             <div className=" flex items-center gap-2">

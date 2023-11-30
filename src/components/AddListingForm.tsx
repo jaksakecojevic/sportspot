@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction, useState } from "react"
 import LoadingDots from "./LoadingDots"
 
 import TextInput from "./inputs/TextInput"
-import ImagesInput from "./ImagesInput"
+import ImagesInput from "./inputs/ImagesInput"
 import { Category, ImageType } from "@/types"
 import DescriptionInput from "./inputs/DescriptionInput"
 import PriceInput from "./inputs/PriceInput"

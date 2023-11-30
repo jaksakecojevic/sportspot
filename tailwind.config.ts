@@ -20,6 +20,7 @@ const config: Config = {
             transitionProperty: {
                 boxShadow: "box-shadow",
                 border: "border",
+                filter: "filter",
             },
         },
     },

@@ -1,9 +1,9 @@
 import { faEye } from "@fortawesome/free-regular-svg-icons"
 import { faEyeLowVision } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { Dispatch, SetStateAction, useState } from "react"
+import { Dispatch, KeyboardEventHandler, SetStateAction, useState } from "react"
 
-export default function TextInput({ value, setValue, label, error, setError, type, id }: { value: string; setValue: Dispatch<SetStateAction<string>>; label?: string; error?: string; setError?: Dispatch<SetStateAction<string>>; type?: "password"; id?: string }) {
+export default function TextInput({ value, setValue, label, error, setError, type, id, onKeyUp }: { value: string; setValue: Dispatch<SetStateAction<string>>; label?: string; error?: string; setError?: Dispatch<SetStateAction<string>>; type?: "password"; id?: string; onKeyUp?: KeyboardEventHandler }) {
     const [focused, setFocused] = useState(false)
     const errorHtml = error ? <p className="font-bold text-red-500">{error}</p> : ""
     const [passwordHidden, setPasswordHidden] = useState(true)
@@ -20,6 +20,7 @@ export default function TextInput({ value, setValue, label, error, setError, typ
                         if (setError) setError("")
                         setFocused(true)
                     }}
+                    onKeyUp={onKeyUp}
                     onBlur={() => setFocused(false)}
                     onChange={(e) => setValue(e.target.value)}
                     className={`px-3 py-1 w-full block rounded-md outline-none border-2 ${error ? "border-red-500" : "border-gray-200"} focus:border-primary transition-border`}
