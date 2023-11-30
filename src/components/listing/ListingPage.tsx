@@ -10,7 +10,7 @@ export default function page({ listing }: { listing: Listing }) {
     const session = useSession()
     const loggedIn = session.data
     return (
-        <div className="px-sideSpace py-8 sm:py-16">
+        <div className="px-sideSpace py-8 sm:py-16 min-h-screen">
             <div className="flex gap-4 sm:gap-8 flex-col lg:flex-row items-center lg:items-stretch">
                 <div className="max-w-xl w-full">
                     <ListingSwiper images={listing.images} />

@@ -12,7 +12,7 @@ const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
     title: "SportSpot",
-    description: "SportsSpot is a web application designed to simplify the process of finding and booking sports facilities.",
+    description: "SportsSpot je veb aplikacija dizajnirana da pojednostavi proces pronalaženja i rezervacije sportskih objekata.",
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

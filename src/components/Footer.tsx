@@ -20,6 +20,9 @@ export default function Footer() {
                             <Link href="/nalog/objekti" className="block w-fit mt-3">
                                 Objekti
                             </Link>
+                            <Link href="/dodaj-objekat" className="block w-fit mt-3">
+                                Objavi svoj objekat
+                            </Link>
                         </>
                     ) : (
                         <>
