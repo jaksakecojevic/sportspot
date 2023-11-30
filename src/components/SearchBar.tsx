@@ -7,7 +7,7 @@ import { Dispatch, SetStateAction, useEffect, useLayoutEffect, useRef, useState 
 import LoadingDots from "./LoadingDots"
 import { categoryOptions } from "@/tools/categoryOptions"
 
-export default function SearchBar({ setListings }: { setListings: Dispatch<SetStateAction<Listing[]>> }) {
+export default function SearchBar({ setListings, listings }: { setListings: Dispatch<SetStateAction<Listing[]>>; listings: Listing[] }) {
     const [query, setQuery] = useState("")
     const [category, setCategory] = useState<Category>("all")
     const [sort, setSort] = useState<"expensive" | "cheap">("cheap")
@@ -41,6 +41,7 @@ export default function SearchBar({ setListings }: { setListings: Dispatch<SetSt
                         setQuery(e.target.value)
                     }}
                     onKeyUp={(e) => {
+                        if (e.key == "Enter" && listings.length == 0) handleSearch()
                         if (e.key == "Enter" && query && query != lastSearchedQuery) handleSearch()
                     }}
                     className="px-4 py-1 rounded-l-lg outline-none w-full max-w-xs"
@@ -49,6 +50,7 @@ export default function SearchBar({ setListings }: { setListings: Dispatch<SetSt
                 <button
                     className="bg-secondary rounded-r-lg px-3 hover:bg-secondaryDarker transition-colors"
                     onClick={() => {
+                        if (listings.length == 0) handleSearch()
                         if (query != lastSearchedQuery) handleSearch()
                     }}
                     title="Pretraga"

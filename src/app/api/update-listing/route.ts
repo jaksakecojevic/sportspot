@@ -5,6 +5,10 @@ import { NextRequest, NextResponse } from "next/server"
 import userModel from "@/models/user"
 import listingModel from "@/models/listing"
 import { authOptions } from "@/tools/authOptions"
+
+// @ts-ignore
+import convert from "cyrillic-to-latin"
+
 export async function POST(req: NextRequest) {
     const session = await getServerSession(authOptions)
     if (!session || !session.user) return NextResponse.json({ message: "Korisnik nije autorizovan.", success: false })
@@ -22,7 +26,10 @@ export async function POST(req: NextRequest) {
 
     const update: any = {}
 
-    if (title) update.title = title
+    if (title) {
+        update.title = title
+        update.searchString = convert(title).toLowerCase()
+    }
     if (description) update.description = description
     if (priceAmount) update["pricePerHour.amount"] = priceAmount
     if (currency) update["pricePerHour.currency"] = currency

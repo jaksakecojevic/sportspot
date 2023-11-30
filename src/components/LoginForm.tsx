@@ -77,7 +77,19 @@ export default function LoginForm() {
             <div className="w-full max-w-lg">
                 <div className="p-4 rounded-lg border-2 border-gray-200 flex flex-col gap-4">
                     <h1 className="text-center text-2xl font-bold">Prijava</h1>
-                    <TextInput id="email" value={email} setValue={setEmail} error={emailError} setError={setEmailError} label="Email" />
+                    <TextInput
+                        id="email"
+                        value={email}
+                        onKeyUp={(e) => {
+                            if (e.key == "Enter" && password) {
+                                handleLogin()
+                            }
+                        }}
+                        setValue={setEmail}
+                        error={emailError}
+                        setError={setEmailError}
+                        label="Email"
+                    />
                     <TextInput
                         id="password"
                         value={password}

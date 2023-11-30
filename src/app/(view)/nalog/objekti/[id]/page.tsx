@@ -1,11 +1,12 @@
 import listingModel from "@/models/listing"
-import ListingPage from "@/components/listing/ListingPage"
 import { connectMongo } from "@/tools/db"
 import serializeData from "@/tools/serializeData"
-import EditListingForm from "@/components/EditListingForm"
+import ManageListingPage from "@/components/listing/ManageListingPage"
+import reservationModel from "@/models/reservation"
 
 export default async function page({ params }: { params: { id: string } }) {
     await connectMongo()
     const listing = await listingModel.findById(params.id)
-    return <EditListingForm listing={serializeData(listing)} />
+    const reservations = await reservationModel.find({ listingId: params.id })
+    return <ManageListingPage listing={serializeData(listing)} reservations={serializeData(reservations)} />
 }

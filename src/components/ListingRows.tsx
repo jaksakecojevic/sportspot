@@ -8,7 +8,7 @@ export default function ListingRows(props: { listings: Listing[] }) {
     const [listings, setListings] = useState<Listing[]>(props.listings)
     return (
         <>
-            <SearchBar setListings={setListings} />
+            <SearchBar setListings={setListings} listings={listings} />
             <div className="flex flex-col gap-4 mt-4">
                 {listings.map((listing, index) => {
                     return <ListingRow listing={listing} key={index} />

@@ -7,6 +7,7 @@ import listingModel from "@/models/listing"
 import { authOptions } from "@/tools/authOptions"
 import { ImageType } from "@/types"
 import { storage } from "@/tools/firebaseAdmin"
+import reservationModel from "@/models/reservation"
 export async function POST(req: NextRequest) {
     const session = await getServerSession(authOptions)
     if (!session || !session.user) return NextResponse.json({ message: "Korisnik nije autorizovan.", success: false })
@@ -27,6 +28,8 @@ export async function POST(req: NextRequest) {
             prefix: `listingImages/${image.id}/`,
         })
     })
+
+    await reservationModel.deleteMany({ listingId: listing.id })
 
     await listing.deleteOne()
 

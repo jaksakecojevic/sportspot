@@ -16,6 +16,7 @@
         "@fortawesome/free-solid-svg-icons": "^6.4.2",
         "@fortawesome/react-fontawesome": "^0.2.0",
         "antd": "^5.11.5",
+        "cyrillic-to-latin": "^2.0.0",
         "firebase": "^10.7.0",
         "firebase-admin": "^11.11.1",
         "moment": "^2.29.4",

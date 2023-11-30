@@ -24,6 +24,7 @@ const listingSchema = new Schema(
             type: String,
             required: true,
         },
+        searchString: String,
         description: {
             type: String,
             required: true,

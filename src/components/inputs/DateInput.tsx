@@ -11,6 +11,10 @@ import locale from "antd/es/date-picker/locale/en_US"
 
 export default function DateInput({ date, setDate, error, setError, label }: { date: Date | undefined; setDate: Dispatch<SetStateAction<Date | undefined>>; error?: string; setError?: Dispatch<SetStateAction<string>>; label?: string }) {
     const errorHtml = error ? <p className="font-bold text-red-500">{error}</p> : ""
+    function disabledDate(current: Moment) {
+        // Can not select days before today and today
+        return current && current.valueOf() < Date.now()
+    }
     return (
         <label>
             {errorHtml || label}
@@ -22,6 +26,7 @@ export default function DateInput({ date, setDate, error, setError, label }: { d
                 onFocus={() => {
                     if (setError) setError("")
                 }}
+                disabledDate={disabledDate}
                 locale={{
                     ...locale,
                     lang: {

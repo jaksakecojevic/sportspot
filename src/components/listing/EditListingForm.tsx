@@ -1,19 +1,23 @@
 "use client"
 
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
-import LoadingDots from "./LoadingDots"
+import LoadingDots from "../LoadingDots"
 
-import TextInput from "./inputs/TextInput"
-import ImagesInput from "./inputs/ImagesInput"
+import TextInput from "../inputs/TextInput"
+import ImagesInput from "../inputs/ImagesInput"
 import { Category, ImageType, Listing } from "@/types"
-import PriceInput from "./inputs/PriceInput"
-import DescriptionInput from "./inputs/DescriptionInput"
-import SelectInput from "./inputs/SelectInput"
+import PriceInput from "../inputs/PriceInput"
+import DescriptionInput from "../inputs/DescriptionInput"
+import SelectInput from "../inputs/SelectInput"
 import { categoryOptions } from "@/tools/categoryOptions"
-import FormButton from "./inputs/FormButton"
+import FormButton from "../inputs/FormButton"
 import { useRouter } from "next/navigation"
 import { revalidatePath } from "next/cache"
 import throwError from "@/tools/throwError"
+import { faPencil } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import Link from "next/link"
+import { faCalendar } from "@fortawesome/free-regular-svg-icons"
 
 export default function EditListingForm(props: { listing: Listing }) {
     const [listing, setListing] = useState(props.listing)
@@ -133,7 +137,13 @@ export default function EditListingForm(props: { listing: Listing }) {
     return (
         <div className="w-full flex justify-center">
             <div className="rounded-lg flex flex-col gap-4 w-full">
-                <h1 className="text-center text-2xl font-bold">Izmeni objekat</h1>
+                <div className="flex justify-between gap-2 flex-wrap mb-4">
+                    <h1 className="text-2xl font-bold">Izmeni objekat</h1>
+                    <Link href={`/nalog/objekti/${listing._id}`} className="bg-green-600 w-fit text-white px-2 py-1 rounded-lg flex items-center gap-2 font-bold hover:bg-green-800 transition-colors">
+                        <FontAwesomeIcon icon={faCalendar} className="block" />
+                        Kalendar
+                    </Link>
+                </div>
                 <TextInput value={title} setValue={setTitle} error={titleError} setError={setTitleError} label="Naslov" />
 
                 <DescriptionInput value={description} setValue={setDescription} error={descriptionError} setError={setDescriptionError} label="Opis objekta" />

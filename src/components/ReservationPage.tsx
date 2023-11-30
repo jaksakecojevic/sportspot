@@ -5,6 +5,7 @@ import ReservationStatusBox from "./ReservationStatusBox"
 import LoadingDots from "./LoadingDots"
 import { Dispatch, SetStateAction, useState } from "react"
 import throwError from "@/tools/throwError"
+import { useRouter } from "next/navigation"
 
 export default function ReservationPage({ reservation }: { reservation: Reservation }) {
     const reservationStartDate = new Date(reservation.startDate)
@@ -38,6 +39,7 @@ export default function ReservationPage({ reservation }: { reservation: Reservat
 }
 
 function CancelButton({ reservation, status, setStatus }: { reservation: Reservation; status: ReservationStatus; setStatus: Dispatch<SetStateAction<ReservationStatus>> }) {
+    const { refresh } = useRouter()
     async function handleCancel() {
         setLoading(true)
 
@@ -51,6 +53,7 @@ function CancelButton({ reservation, status, setStatus }: { reservation: Reserva
         if (resBody.success) {
             setStatus("cancelled")
             setPopupOn(false)
+            refresh()
         } else {
             if (resBody.message) {
                 throwError(setDeletionError, resBody.message)

@@ -2,6 +2,8 @@ import listingModel from "@/models/listing"
 import { connectMongo } from "@/tools/db"
 import { getServerSession } from "next-auth"
 import { NextRequest, NextResponse } from "next/server"
+// @ts-ignore
+import convert from "cyrillic-to-latin"
 export async function GET(req: NextRequest) {
     const query = req.nextUrl.searchParams.get("query")
     const category = req.nextUrl.searchParams.get("category")
@@ -10,7 +12,7 @@ export async function GET(req: NextRequest) {
     var filter: any = {}
 
     if (query) {
-        filter.title = { $regex: new RegExp(query, "i") }
+        filter.searchString = { $regex: new RegExp(convert(query), "i") }
     }
 
     if (category && category != "all") {

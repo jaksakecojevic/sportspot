@@ -12,10 +12,10 @@ export default function AccountWindow({ children }: { children: React.ReactNode 
                     <Link href="/nalog" className={`px-2 py-1 rounded-lg   transition-colors ${pathname == "/nalog" ? "bg-primary text-white hover:bg-primaryDarker" : "bg-gray-200 hover:bg-gray-300"}`}>
                         Nalog
                     </Link>
-                    <Link href="/nalog/rezervacije" className={`px-2 py-1 rounded-lg   transition-colors ${pathname == "/nalog/rezervacije" ? "bg-primary text-white hover:bg-primaryDarker" : "bg-gray-200 hover:bg-gray-300"}`}>
+                    <Link href="/nalog/rezervacije" className={`px-2 py-1 rounded-lg   transition-colors ${pathname.includes("/nalog/rezervacije") ? "bg-primary text-white hover:bg-primaryDarker" : "bg-gray-200 hover:bg-gray-300"}`}>
                         Rezervacije
                     </Link>
-                    <Link href="/nalog/objekti" className={`px-2 py-1 rounded-lg   transition-colors ${pathname == "/nalog/objekti" ? "bg-primary text-white hover:bg-primaryDarker" : "bg-gray-200 hover:bg-gray-300"}`}>
+                    <Link href="/nalog/objekti" className={`px-2 py-1 rounded-lg   transition-colors ${pathname.includes("/nalog/objekti") ? "bg-primary text-white hover:bg-primaryDarker" : "bg-gray-200 hover:bg-gray-300"}`}>
                         Objekti
                     </Link>
                 </div>
