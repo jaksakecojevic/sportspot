@@ -6,16 +6,20 @@ SportsSpot je web aplikacija dizajnirana da pojednostavi proces pronalaženja i 
 
 ### Korišćene Tehnologije
 
-- Node.js
-- Next.js
-- TypeScript
-- TailWind
-- MongoDB
-- Swiper
-- Firebase Cloud Storage
-- NextAuth
+-   Node.js
+-   Next.js
+-   TypeScript
+-   TailWind
+-   MongoDB
+-   Swiper
+-   Firebase Cloud Storage
+-   NextAuth
+-   AntDesign
 
-### Instalacija
+### Lokalni Setup
+
+Da biste koristili aplikaciju potrebno je da kreirate .env fajl u root-u repozitorije, koji je u formatu kao .env.example.
+Sve env promenjive moraju biti adekvatno popunjene da bi aplikacija funkcionisala.
 
 Klonirajte repo. Unutar foldera preuzmite Next.js preko komande `npm i`.
 Nakon toga pokrenite aplikaciju preko komande `npm run dev`.
@@ -33,11 +37,15 @@ Na glavnoj stranici možete videti koji objekti su dostupni za iznajmljivanje. D
 
 Kada nađete objekat koji želite da iznajmite, možete viti detalje o njemu pritiskom na taster "Detaljnije". On vas vodi na stranicu koja vam prikazuje detalje o tom objektu, kao što su njegova adresa, kategorija i cena iznajmljivanja. Takođe možete videti opis tog objekta koji mu je izdavač dodelio.
 
+### Kreiranje objekat i rezervacija
+
+Na stranici nalog imate podstranice objekti i rezervacije, na tim stranicama možete pregledati/menjati/brisati objekte čiji ste vlasnik kao i rezervacije koje ste kreirali.
+
 ## Zasluge
 
-Ovaj projekat je napravljen kao domaći zadatak za Hakaton 2023. godine.
+Ovaj projekat je napravljen kao domaći zadatak za Hakaton za srednjoškolce 2023. godine.
 Na njemu su radili:
 
-- Jakša Kecojević
-- Stefan Fišer
-- Strahinja Lukić
+-   Jakša Kecojević
+-   Stefan Fišer
+-   Strahinja Lukić
