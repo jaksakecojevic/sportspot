@@ -22,7 +22,5 @@ export async function POST(req: NextRequest) {
 
     await reservation.updateOne({ status: "cancelled" })
 
-    console.log(reservation)
-
     return NextResponse.json({ success: true, message: "Uspešno otkazana rezervacija." })
 }

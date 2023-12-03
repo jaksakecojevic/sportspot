@@ -12,7 +12,6 @@ export async function GET(req: NextRequest) {
     var filter: any = {}
 
     if (query) {
-        console.log(toSearchableString(query))
         filter.searchString = { $regex: new RegExp(toSearchableString(query), "i") }
     }
 

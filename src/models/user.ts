@@ -14,6 +14,14 @@ const userSchema = new Schema(
             type: String,
             required: true,
         },
+        phoneNumber: {
+            type: String,
+            required: true,
+        },
+        countryCode: {
+            type: String,
+            required: true,
+        },
         password: {
             type: String,
             required: true,

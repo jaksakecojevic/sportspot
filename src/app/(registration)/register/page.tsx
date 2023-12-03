@@ -1,5 +1,5 @@
 import { authOptions } from "@/tools/authOptions"
-import RegisterForm from "@/components/RegisterForm"
+import RegisterForm from "@/components/registration/RegisterForm"
 import { getServerSession } from "next-auth"
 import { redirect } from "next/navigation"
 

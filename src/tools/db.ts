@@ -8,6 +8,7 @@ export const connectMongo = async () => {
         return
     }
     console.log("Mongo connected.")
+
     const db = await mongoose.connect(process.env.MONGO_URL as string)
     connection.isConnected = db.connections[0].readyState
 }

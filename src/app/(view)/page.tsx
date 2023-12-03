@@ -1,4 +1,4 @@
-import ListingRows from "@/components/ListingRows"
+import ListingRows from "@/components/listing/ListingRows"
 import listingModel from "@/models/listing"
 import { connectMongo } from "@/tools/db"
 import serializeData from "@/tools/serializeData"

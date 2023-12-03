@@ -30,3 +30,20 @@
 body {
     color: var(--textColor);
 }
+
+.ant-picker-calendar-date-today{
+    border-color: rgba(5, 5, 5, 0.06) !important;
+}
+.ant-picker-cell-inner{
+    transition: border 200ms !important;
+}
+.ant-picker-cell-selected .ant-picker-cell-inner{
+    border-color: var(--primary) !important;
+}
+/* .ant-picker-date-panel .ant-picker-cell:not(.ant-picker-cell-in-view) .ant-picker-cell-inner {
+    display: none;
+}
+  
+.ant-picker-date-panel .ant-picker-cell:not(.ant-picker-cell-in-view) {
+    pointer-events: none;
+} */
