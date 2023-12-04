@@ -13,6 +13,24 @@ export default async function Account() {
     await connectMongo()
     const user = await userModel.findOne({ email: session.user.email })
 
+    const renderCountry = () => {
+        // @ts-ignore
+        if (user.countryCode && countries[user.countryCode]) {
+            return (
+                <>
+                    <div className="flex gap-2 items-center">
+                        Država:{" "}
+                        <div className="p-1 bg-gray-100 rounded-lg border-2 border-gray-300">
+                            {/* @ts-ignore */}
+                            {countries[user.countryCode].name} {getFlagEmoji(user.countryCode)}
+                        </div>
+                    </div>
+                </>
+            )
+        }
+        return ""
+    }
+
     return (
         <div className="flex flex-col gap-2 justify-between h-full px-sideSpace py-4">
             <h2 className="text-xl font-semibold mb-4">Moj nalog</h2>
@@ -28,14 +46,7 @@ export default async function Account() {
             <div className="flex gap-2 items-center">
                 Telefon: <div className="p-1 bg-gray-100 rounded-lg border-2 border-gray-300">{user?.phoneNumber}</div>
             </div>
-            <div className="flex gap-2 items-center">
-                Država:{" "}
-                <div className="p-1 bg-gray-100 rounded-lg border-2 border-gray-300">
-                    {/* @ts-ignore */}
-                    {countries[user?.countryCode].name} {getFlagEmoji(user.countryCode)}
-                </div>
-            </div>
-
+            {renderCountry()}
             <LogoutButton />
         </div>
     )
