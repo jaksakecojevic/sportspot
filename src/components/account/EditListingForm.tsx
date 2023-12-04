@@ -139,10 +139,6 @@ export default function EditListingForm(props: { listing: Listing }) {
             <div className="rounded-lg flex flex-col gap-4 w-full">
                 <div className="flex justify-between gap-2 flex-wrap mb-4">
                     <h1 className="text-2xl font-bold">Izmeni objekat</h1>
-                    <Link href={`/nalog/objekti/${listing._id}`} className="bg-green-600 w-fit text-white px-2 py-1 rounded-lg flex items-center gap-2 font-bold hover:bg-green-800 transition-colors">
-                        <FontAwesomeIcon icon={faCalendar} className="block" />
-                        Kalendar
-                    </Link>
                 </div>
                 <TextInput value={title} setValue={setTitle} error={titleError} setError={setTitleError} label="Naslov" />
 

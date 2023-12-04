@@ -1,19 +1,33 @@
+"use client"
 import { Listing } from "@/types"
 import Link from "next/link"
+import { useEffect, useState } from "react"
+import LoadingDots from "../LoadingDots"
+import { usePathname } from "next/navigation"
 
 export default function ListingRow({ listing }: { listing: Listing }) {
     const url = `/objekti/${listing._id}`
+    const [loading, setLoading] = useState(false)
+    const pathname = usePathname()
+
+    useEffect(() => {
+        console.log("changed")
+    }, [pathname])
+
+    function handleReroute() {
+        setLoading(true)
+    }
 
     return (
         <div className="flex flex-col lg:flex-row gap-4 p-4 border-2 border-gray-200 rounded-lg">
-            <Link href={url} className="w-full lg:w-fit self-center block ">
+            <Link onClick={handleReroute} href={url} className="w-full lg:w-fit self-center block">
                 <img src={listing.images[0].url || "/notFound.jpg"} className="rounded-lg object-cover w-full lg:w-[500px] h-[200px]" width={500} alt="" />
             </Link>
             <div className="basis-full">
-                <Link href={url} className="font-black text-xl text-primaryLighter hover:text-primaryDarker block transition-colors">
+                <Link onClick={handleReroute} href={url} className="font-black text-xl text-primaryLighter hover:text-primaryDarker block transition-colors">
                     {listing.title}
                 </Link>
-                <Link href={url} className="underline font-semibold text-primaryLighter block">
+                <Link onClick={handleReroute} href={url} className="underline font-semibold text-primaryLighter block">
                     {listing.address.city}
                 </Link>
                 <Description description={listing.description} url={url} />
@@ -26,8 +40,8 @@ export default function ListingRow({ listing }: { listing: Listing }) {
                 {listing.pricePerHour.currency != "RSD" ? <div className="text-primary text-xs">{listing.pricePerHour.amountInRsd} RSD</div> : ""}
             </div>
             <div className="basis-1/5 flex justify-end items-baseline">
-                <Link href={url} className="w-full text-center sm:w-fit px-4 py-2 bg-primary text-white rounded-md font-semibold hover:bg-primaryDarker transition-colors duration-200">
-                    Detaljnije
+                <Link onClick={handleReroute} href={url} className="w-full text-center sm:w-fit px-4 h-10 flex justify-center items-center bg-primary text-white rounded-md font-semibold hover:bg-primaryDarker transition-colors duration-200">
+                    {loading ? <LoadingDots /> : "Detaljnije"}
                 </Link>
             </div>
         </div>

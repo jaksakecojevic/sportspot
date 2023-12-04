@@ -63,9 +63,10 @@ export default function LoginForm() {
             password,
             redirect: false,
         })
-        setLoading(false)
+
         if (res?.error) {
             throwError(setLoginError, res.error)
+            setLoading(false)
         } else {
             push(redirectId ? `/rezervisi/${redirectId}` : "/nalog")
             refresh()

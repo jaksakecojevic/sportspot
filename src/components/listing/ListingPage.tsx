@@ -5,10 +5,13 @@ import { list } from "firebase/storage"
 import Link from "next/link"
 import { useSession } from "next-auth/react"
 import ListingDescription from "./ListingDescription"
+import { useState } from "react"
+import LoadingDots from "../LoadingDots"
 
 export default function page({ listing }: { listing: Listing }) {
     const session = useSession()
     const loggedIn = session.data
+    const [loading, setLoading] = useState(false)
     return (
         <div className="px-sideSpace py-8 sm:py-16 min-h-screen">
             <div className="flex gap-4 sm:gap-8 flex-col lg:flex-row items-center lg:items-stretch">
@@ -30,8 +33,8 @@ export default function page({ listing }: { listing: Listing }) {
                             {listing.pricePerHour.amount} {listing.pricePerHour.currency}
                         </div>
                     </div>
-                    <Link href={!loggedIn ? `/login?reservationRedirect=${listing._id}` : `/rezervisi/${listing._id}`} className="w-full sm:w-fit bg-primary block text-center text-white font-semibold rounded-lg px-4 py-2 mt-6 transition-colors hover:bg-primaryDarker">
-                        Rezerviši termin
+                    <Link onClick={() => setLoading(true)} href={!loggedIn ? `/login?reservationRedirect=${listing._id}` : `/rezervisi/${listing._id}`} className="w-full sm:w-40 bg-primary flex items-center justify-center text-center text-white font-semibold rounded-lg h-10 mt-6 transition-colors hover:bg-primaryDarker">
+                        {loading ? <LoadingDots /> : "Rezerviši termin"}
                     </Link>
                 </div>
             </div>

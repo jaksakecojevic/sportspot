@@ -14,5 +14,10 @@ export interface Address {
     street: string
     city: string
 }
+export type LinkObject = {
+    url: string
+    children: React.ReactNode
+    highlightOnlyIfUrlEqual?: boolean
+}
 export type Category = "all" | "football" | "basketball" | "tennis" | "pool"
 export type ReservationStatus = "open" | "finished" | "cancelled"

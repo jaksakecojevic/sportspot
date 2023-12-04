@@ -6,3 +6,6 @@ export function sameDay(d1: Moment, d2: Moment) {
 export function getFlagEmoji(countryCode: string) {
     return countryCode.toUpperCase().replace(/./g, (char) => String.fromCodePoint(127397 + char.charCodeAt(0)))
 }
+export function awaitTimeout(delay: number) {
+    return new Promise((resolve) => setTimeout(resolve, delay))
+}
