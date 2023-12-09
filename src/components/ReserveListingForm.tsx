@@ -7,7 +7,7 @@ import { Listing, User } from "@/types"
 
 import DateInput from "./inputs/DateInput"
 import TimeInput from "./inputs/TimeInput"
-import { Moment } from "moment"
+import moment, { Moment } from "moment"
 import FormButton from "./inputs/FormButton"
 import { useRouter } from "next/navigation"
 
@@ -106,7 +106,7 @@ export default function ReserveListingForm({ listing, user }: { listing: Listing
         }
     }
 
-    const disabledTime = (date: Moment) => {
+    const disabledEndTime = (date: Moment) => {
         if (!startTime) return
         const startHours = startTime.split(":")[0]
         const pastHours = Array.from({ length: parseInt(startHours) + 1 }, (e, i) => i)
@@ -116,6 +116,15 @@ export default function ReserveListingForm({ listing, user }: { listing: Listing
         return {
             disabledHours: () => pastHours,
             disabledMinutes: () => minuteOptions.filter((n) => n != startMinutes),
+        }
+    }
+
+    const disabledStartTime = (date: Moment) => {
+        const now = moment()
+        const pastHours = Array.from({ length: now.hours() + 1 }, (e, i) => i)
+        pastHours.push(23)
+        return {
+            disabledHours: () => pastHours,
         }
     }
 
@@ -141,8 +150,8 @@ export default function ReserveListingForm({ listing, user }: { listing: Listing
                     <DateInput date={day} setDate={setDay} error={dayError} setError={setDayError} label="Izaberi dan" />
 
                     <div className="flex gap-2 w-full">
-                        <TimeInput date={startTime} setDate={setStartTime} error={startTimeError} setError={setStartTimeError} label="Vreme početka" />
-                        <TimeInput date={endTime} disabledTime={disabledTime} disabled={!startTime} title={!startTime ? "Prvo unesi vreme početka" : ""} setDate={setEndTime} error={endTimeError} setError={setEndTimeError} label="Vreme kraja" />
+                        <TimeInput date={startTime} disabledTime={disabledStartTime} setDate={setStartTime} error={startTimeError} setError={setStartTimeError} label="Vreme početka" />
+                        <TimeInput date={endTime} disabledTime={disabledEndTime} disabled={!startTime} title={!startTime ? "Prvo unesi vreme početka" : ""} setDate={setEndTime} error={endTimeError} setError={setEndTimeError} label="Vreme kraja" />
                     </div>
                     <Total listing={listing} startTime={startTime} endTime={endTime} />
                     <FormButton onClick={handleCreate} disabled={loading}>

@@ -30,7 +30,7 @@ export default function CountryInput({ value, setValue, label }: { value: string
                         setSearchValue("")
                         setDropdownOn(false)
                     }}
-                    className={`px-3 py-1 w-full block rounded-md outline-none border-2 focus:border-primary transition-border`}
+                    className={`px-3 py-1 w-full block rounded-md outline-none border-2 cursor-pointer focus:border-primary transition-border`}
                 />
                 <span className="absolute right-3 top-[6px]">{getFlagEmoji(value)}</span>
             </div>

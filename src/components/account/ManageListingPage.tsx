@@ -36,7 +36,7 @@ function SelectedDatePreview({ date, listing, reservations }: { date: Moment; li
     return (
         <div className="p-4 rounded-lg border-2 border-gray-200 h-full">
             <div>
-                Datum: <span className="font-medium">{moment(date).format("DD.MM.YYYY.")}.</span>
+                Datum: <span className="font-medium">{moment(date).format("DD.MM.YYYY.")}</span>
             </div>
             <div className="mt-4">
                 <h2 className="font-semibold text-lg">{thisDateReservations.length == 0 ? "Nema termina za ovaj datum" : "Termini"}</h2>

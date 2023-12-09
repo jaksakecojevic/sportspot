@@ -65,7 +65,7 @@ export default function SearchBar({ setListings, listings }: { setListings: Disp
                     onChange={(e) => {
                         setCategory(e.target.value as Category)
                     }}
-                    className="px-3 rounded-lg outline-none cursor-pointer h-full"
+                    className="px-3 rounded-lg outline-none cursor-pointer h-full w-full"
                 >
                     {categoryOptions.map((option, index) => {
                         return (

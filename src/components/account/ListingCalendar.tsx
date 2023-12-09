@@ -8,6 +8,7 @@ import { Dispatch, SetStateAction, useState } from "react"
 
 import srRS from "antd/es/calendar/locale/sr_RS"
 import { sameDay } from "@/tools"
+import { locale } from "@/tools/locale"
 
 const MyCalendar = Calendar.generateCalendar<Moment>({ ...momentGenerateConfig })
 
@@ -48,7 +49,7 @@ export default function ListingCalendar({ listing, reservations, date, setDate }
                 ...srRS,
                 lang: {
                     ...srRS.lang,
-                    shortWeekDays: ["Ned", "Pon", "Uto", "Sre", "Čet", "Pet", "Sub"],
+                    shortWeekDays: locale.rs.shortWeekDays,
                 },
             }}
         />

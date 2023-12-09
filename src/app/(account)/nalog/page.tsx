@@ -43,9 +43,14 @@ export default async function Account() {
             <div className="flex gap-2 items-center">
                 Email: <div className="p-1 bg-gray-100 rounded-lg border-2 border-gray-300">{user?.email}</div>
             </div>
-            <div className="flex gap-2 items-center">
-                Telefon: <div className="p-1 bg-gray-100 rounded-lg border-2 border-gray-300">{user?.phoneNumber}</div>
-            </div>
+            {user?.phoneNumber ? (
+                <div className="flex gap-2 items-center">
+                    Telefon: <div className="p-1 bg-gray-100 rounded-lg border-2 border-gray-300">{user?.phoneNumber}</div>
+                </div>
+            ) : (
+                ""
+            )}
+
             {renderCountry()}
             <LogoutButton />
         </div>

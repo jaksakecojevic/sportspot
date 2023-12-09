@@ -7,6 +7,7 @@ import { useRouter, useSearchParams } from "next/navigation"
 import Link from "next/link"
 import { signIn } from "next-auth/react"
 import TextInput from "../inputs/TextInput"
+import GoogleButton from "./GoogleButton"
 
 export default function LoginForm() {
     const { push, refresh } = useRouter()
@@ -17,6 +18,9 @@ export default function LoginForm() {
 
     const [emailError, setEmailError] = useState("")
     const [passwordError, setPasswordError] = useState("")
+
+    const [passwordFocused, setPasswordFocused] = useState(false)
+    const [emailFocused, setEmailFocused] = useState(false)
 
     const [loginError, setLoginError] = useState("")
 
@@ -81,11 +85,14 @@ export default function LoginForm() {
                     <TextInput
                         id="email"
                         value={email}
-                        onKeyUp={(e) => {
-                            if (e.key == "Enter" && password) {
-                                handleLogin()
+                        onKeyDown={(e) => {
+                            if (e.key == "Enter") {
+                                if (password) handleLogin()
+                                else setPasswordFocused(true)
                             }
                         }}
+                        focused={emailFocused}
+                        setFocused={setEmailFocused}
                         setValue={setEmail}
                         error={emailError}
                         setError={setEmailError}
@@ -94,11 +101,14 @@ export default function LoginForm() {
                     <TextInput
                         id="password"
                         value={password}
-                        onKeyUp={(e) => {
+                        onKeyDown={(e) => {
                             if (e.key == "Enter") {
-                                handleLogin()
+                                if (email) handleLogin()
+                                else setEmailFocused(true)
                             }
                         }}
+                        focused={passwordFocused}
+                        setFocused={setPasswordFocused}
                         setValue={setPassword}
                         error={passwordError}
                         setError={setPasswordError}
@@ -110,6 +120,7 @@ export default function LoginForm() {
                     </button>
                     {loginError ? <div className="text-white font-semibold bg-red-500 p-2 rounded-lg">{loginError}</div> : ""}
                 </div>
+                <GoogleButton />
                 <Link href={redirectId ? `/register?reservationRedirect=${redirectId}` : `/register`} className="text-center block w-full mt-4 text-primary hover:text-primaryDarker transition-colors">
                     Nemaš nalog? Registruj se
                 </Link>

@@ -8,6 +8,7 @@ import Link from "next/link"
 import { signIn } from "next-auth/react"
 import TextInput from "../inputs/TextInput"
 import CountryInput from "../inputs/CountryInput"
+import GoogleButton from "./GoogleButton"
 
 export default function RegisterForm() {
     const params = useSearchParams()
@@ -140,6 +141,7 @@ export default function RegisterForm() {
                     </button>
                     {registrationError ? <div className="text-white font-semibold bg-red-500 p-2 rounded-lg">{registrationError}</div> : ""}
                 </div>
+                <GoogleButton />
                 <Link href={redirectId ? `/login?reservationRedirect=${redirectId}` : `/login`} className="text-center block w-full mt-4 text-primary hover:text-primaryDarker transition-colors">
                     Već imaš nalog? Uloguj se
                 </Link>
